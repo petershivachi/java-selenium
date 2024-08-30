@@ -112,17 +112,19 @@ public class Selenium {
             nextButton.click();
 
             // Phone number verification
-//            WebElement phoneNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("Passwd")));
-//            passwordField.clear();
-//            passwordField.sendKeys(phone);
-//
-//
-//            nextButton = driver.findElement(By.className("VfPpkd-LgbsSe"));
-//            nextButton.click();
+            WebElement phoneNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phoneNumberId")));
+            phoneNumber.clear();
+            phoneNumber.sendKeys(phone);
 
-            // Skip phone number and recovery email steps (if possible)
-            WebElement skipButtons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("button span.VfPpkd-vQzf8d"))).get(0);
-            skipButtons.click();
+
+            nextButton = driver.findElement(By.className("VfPpkd-LgbsSe"));
+            nextButton.click();
+
+            // Accept verification code
+            driver.manage().wait(15000);
+
+            nextButton = driver.findElement(By.className("VfPpkd-LgbsSe"));
+            nextButton.click();
 
             // Agree to terms
             WebElement agreeButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button span.VfPpkd-vQzf8d")));
