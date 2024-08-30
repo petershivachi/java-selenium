@@ -42,3 +42,10 @@ Google Chrome 123.0.6312.86
 ```bash
 # pip3 install selenium
 # pip3 install webdriver-manager
+```
+
+## Run the project
+1. Clone the project
+2. Open the project in your favorite IDE
+3. Run the project and appropriately supply the necessary fields with valid details
+4. Transfer the code to the directory you want to install the application

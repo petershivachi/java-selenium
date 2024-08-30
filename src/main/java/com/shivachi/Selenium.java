@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class Selenium {
     Random random = new Random();
 
-    private String firstName, lastName, dateOfBirth, gender, password, phone;
+    private String firstName, lastName, dateOfBirth, gender, password, phone, email;
     int randomNumber = random.nextInt(9000) + 1000;
 
     public void dataIn(){
@@ -71,9 +71,7 @@ public class Selenium {
             // Fill in the birthday
             String[] birthdayElements = dateOfBirth.split(" ");
             Select monthDropdown = new Select(driver.findElement(By.id("month")));
-//            monthDropdown.selectByValue(birthdayElements[1]);
-//            dayField.clear();
-//            dayField.sendKeys(birthdayElements[0]);
+
             monthDropdown.selectByValue(birthdayElements[1]);
             driver.findElement(By.id("day")).sendKeys(birthdayElements[0]);
             driver.findElement(By.id("year")).sendKeys(birthdayElements[2]);
@@ -95,6 +93,8 @@ public class Selenium {
             WebElement usernameField = wait.until(ExpectedConditions.elementToBeClickable(By.name("Username")));
             usernameField.clear();
             usernameField.sendKeys(username);
+
+            email = username + "@gmail.com";
 
             nextButton = driver.findElement(By.className("VfPpkd-LgbsSe"));
             nextButton.click();
@@ -145,10 +145,38 @@ public class Selenium {
         WebDriver driver = new ChromeDriver();
 
         try {
-            driver.get("https://www.jumia.com");
+            driver.get("https://www.jumia.co.ke/");
+
+            //Close newsletter dialogue
+            WebElement nextButton = driver.findElement(By.className("cls"));
+            nextButton.click();
+
+
+            /**  Account Creation
+            * Locate the label that triggers the dropdown using its class name or other attributes
+             */
+            WebElement dropdownLabel = driver.findElement(By.cssSelector("label.trig.-df.-i-ctr.-fs16"));
+            dropdownLabel.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.btn._prim.-fw._md")));
+            signInButton.click();
+
+            WebElement userEmail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("input_identifierValue")));
+            userEmail.clear();
+            userEmail.sendKeys(email);
+
+            nextButton = driver.findElement(By.cssSelector("span.mdc-button__touch"));
+            nextButton.click();
+
+
 
             // Click on "Login" or "Sign Up"
-            driver.findElement(By.linkText("Sign in")).click();
+            String[] birthdayElements = dateOfBirth.split(" ");
+            Select monthDropdown = new Select(driver.findElement(By.id("month")));
+
+            Select accountDropdown = new Select(driver.findElement(By.id("dpdw-login-box")));
+
+//            driver.findElement(By.linkText("Sign in")).click();
 
             // Click on "Sign in with Google"
             driver.findElement(By.xpath("//button[contains(text(),'Google')]")).click();
